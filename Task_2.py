@@ -184,14 +184,17 @@ def transfer(email):
         print("Thank you for banking with us")
 
 
+prompt = input("Press 1: Create Account \nPress 2: Transaction \nPress q to quit ")
 while True:
-    prompt = input("Press 1: Create Account \nPress 2: Transaction \nPress another key to quit ")
-
-    if prompt == "1":
-        create_account()
-
-    elif prompt == "2":
-        transaction()
+    if prompt == "1" or prompt == "2" or prompt == "q":
+        break
     else:
-        print("Thank you, Goodbye!!!")
-        quit()
+        print("Invalid selection")
+        prompt = input("Press 1: Create Account \nPress 2: Transaction \nPress q to quit ")
+if prompt == "1":
+    create_account()
+elif prompt == "2":
+    transaction()
+elif prompt == "q":
+    print("Thank you, Goodbye!!!")
+    quit()
