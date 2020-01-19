@@ -1,5 +1,5 @@
 bank = {
-    "ukponoobott@gmail.com": {"password": "12345", "balance": 4000.0}
+
 }
 
 
@@ -8,10 +8,12 @@ def create_account():
     print("Thank you for your interest in Banking with us,\nPlease enter your details correctly")
     print("=========================================\n=========================================")
     email = input("Enter your email  ")
+    # check if account id already exists
     if email in bank.keys():
         print("Account with this email already exists")
     else:
         password = input("Enter your password  ")
+        # initialize the balance to $0.0
         balance = 0.0
         bank[email] = {"password": password, "balance": balance}
         print(bank)
@@ -23,15 +25,18 @@ def transaction():
     print("Dear Customer, Welcome!")
     print("                                         \n                                         ")
     email = input("Please enter your email  ")
+    # check if user exists or not
     if email not in bank.keys():
         print("Sorry Account does not exist, Please Create account")
     else:
         password = input("Please enter your password  ")
+        # check if supplied password matches with the saved password to authenticate user
         if password == bank[email]["password"]:
             print("Dear Customer, you have been authenticated")
             print("Please proceed to select a transaction type")
             print("=========================================\n=========================================")
             print("                                         \n                                         ")
+            # user is authenticated give option for transactions available
             transaction_prompt = input("Press 1: Check balance\nPress 2: Deposit\nPress 3: Withdraw\nPress4: Transfer")
             print("                                         \n                                         ")
             if transaction_prompt == "1":
@@ -56,6 +61,7 @@ def transaction():
 
 def check_balance(email):
     """Check account balance"""
+    # query data structure to get current user balance
     balance = bank[email]["balance"]
     print("Your balance is ", balance)
 
@@ -73,15 +79,18 @@ def withdraw(email):
     """Withdraw funds"""
     withdrawal_amount = int(input("Please enter an amount to withdraw"))
     current_balance = bank[email]["balance"]
+    # check if there is sufficient balance for the transaction
     if current_balance < withdrawal_amount:
-        print("Insufficient funds, Would you make a DEPOSIT now?")
-        print("Yes or No")
+        print("Insufficient funds, your current balance is", current_balance)
+        print("Would you make a DEPOSIT now? Yes or No")
         option = input()
         if option.lower() == "yes":
             deposit(email)
-        else:
+        elif option.lower() == "no":
             print("Thank you for banking with us!")
             quit()
+        else:
+            print("Invalid selection")
     else:
         bank[email]["balance"] = current_balance - withdrawal_amount
         new_balance = bank[email]["balance"]
@@ -96,15 +105,18 @@ def transfer(email):
         transfer(email)
     transfer_amount = int(input("Please enter the amount to transfer"))
     current_balance = bank[email]["balance"]
+    # check if there is sufficient balance for the transaction
     if current_balance < transfer_amount:
-        print("Insufficient funds, Would you make a DEPOSIT now?")
-        print("Yes or No")
+        print("Insufficient funds, your current balance is", current_balance)
+        print("Would you make a DEPOSIT now? Yes or No")
         option = input()
         if option.lower() == "yes":
             deposit(email)
-        else:
+        elif option.lower() == "no":
             print("Thank you for banking with us!")
             quit()
+        else:
+            print("Invalid selection")
     else:
         bank[email]["balance"] = current_balance - transfer_amount
         new_balance = bank[email]["balance"]
@@ -114,7 +126,7 @@ def transfer(email):
 
 
 while True:
-    prompt = input("Press 1: Create Account\nPress 2: Transaction")
+    prompt = input("Press 1: Create Account\nPress 2: Transaction ")
 
     if prompt == "1":
         create_account()
