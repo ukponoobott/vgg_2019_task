@@ -9,15 +9,19 @@ def create_account():
     print("=========================================\n=========================================")
     email = input("Enter your email  ")
     # check if account id already exists
-    if email in bank.keys():
-        print("Account with this email already exists")
+    if ("@" in email) and ("." in email):
+        if email in bank.keys():
+            print("Account with this email already exists")
+        else:
+            password = input("Enter your password  ")
+            # initialize the balance to $0.0
+            balance = 0.0
+            bank[email] = {"password": password, "balance": balance}
+            print(bank)
+            print("Account created successfully, Proceed to make a transaction")
     else:
-        password = input("Enter your password  ")
-        # initialize the balance to $0.0
-        balance = 0.0
-        bank[email] = {"password": password, "balance": balance}
-        print(bank)
-        print("Account created successfully, Proceed to make a transaction")
+        print("Email is not valid, Please try again")
+        create_account()
 
 
 def transaction():
@@ -126,10 +130,13 @@ def transfer(email):
 
 
 while True:
-    prompt = input("Press 1: Create Account\nPress 2: Transaction ")
+    prompt = input("Press 1: Create Account \nPress 2: Transaction \nPress another key to quit ")
 
     if prompt == "1":
         create_account()
 
     elif prompt == "2":
         transaction()
+    else:
+        print("Thank you, Goodbye!!!")
+        quit()
