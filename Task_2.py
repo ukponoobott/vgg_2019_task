@@ -1,5 +1,16 @@
-bank = {
+"""
+A command line banking application with the following functionality;
+- Create account
+- Perform transactions when user is authenticated
+    - Check balance
+    - Deposit funds
+    - Withdraw funds
+    - Transfer funds
+"""
 
+# mock data for testing
+bank = {
+    "user@gmail.com": {"password": "12345", "balance": 2500.00}
 }
 
 
@@ -72,19 +83,41 @@ def check_balance(email):
 
 def deposit(email):
     """Deposit funds"""
-    amount = int(input("Please Enter an amount you want to deposit"))
+    amount = input("Please Enter an amount you want to deposit")
+    while True:
+        try:
+            valid_amount = float(amount)
+            if valid_amount > 0.0:
+                break
+            else:
+                print("Invalid amount, please enter figures only")
+                amount = input("Please Enter an amount you want to deposit")
+        except ValueError:
+            print("Invalid amount, please enter figures only")
+            amount = input("Please Enter an amount you want to deposit")
     current_balance = bank[email]["balance"]
-    bank[email]["balance"] = current_balance + amount
+    bank[email]["balance"] = current_balance + valid_amount
     new_balance = bank[email]["balance"]
-    print("You have deposited ", amount, "Your new balance is ", new_balance)
+    print("You have deposited ", valid_amount, "Your new balance is ", new_balance)
 
 
 def withdraw(email):
     """Withdraw funds"""
-    withdrawal_amount = int(input("Please enter an amount to withdraw"))
-    current_balance = bank[email]["balance"]
+    withdrawal_amount = input("Please enter an amount to withdraw")
     # check if there is sufficient balance for the transaction
-    if current_balance < withdrawal_amount:
+    while True:
+        try:
+            valid_withdrawal_amount = float(withdrawal_amount)
+            if valid_withdrawal_amount > 0.0:
+                break
+            else:
+                print("Invalid amount, please enter figures only")
+                withdrawal_amount = input("Please enter an amount to withdraw")
+        except ValueError:
+            print("Invalid amount, please enter figures only")
+            withdrawal_amount = input("Please enter an amount to withdraw")
+    current_balance = bank[email]["balance"]
+    if current_balance < valid_withdrawal_amount:
         print("Insufficient funds, your current balance is", current_balance)
         print("Would you make a DEPOSIT now? Yes or No")
         option = input()
@@ -96,7 +129,7 @@ def withdraw(email):
         else:
             print("Invalid selection")
     else:
-        bank[email]["balance"] = current_balance - withdrawal_amount
+        bank[email]["balance"] = current_balance - valid_withdrawal_amount
         new_balance = bank[email]["balance"]
         print("You have withdrawn", withdrawal_amount, "Your new balance is ", new_balance)
 
@@ -107,26 +140,37 @@ def transfer(email):
     if recipient not in bank.keys():
         print("Beneficiary account does not exist, Please try again")
         transfer(email)
-    transfer_amount = int(input("Please enter the amount to transfer"))
+    transfer_amount = input("Please enter the amount to transfer")
+    while True:
+        try:
+            valid_amount = float(transfer_amount)
+            if valid_amount > 0.0:
+                break
+            else:
+                print("Invalid amount, please enter figures only")
+                transfer_amount = input("Please enter the amount to transfer")
+        except ValueError:
+            print("Invalid amount, please enter figures only")
+            transfer_amount = input("Please enter the amount to transfer")
     current_balance = bank[email]["balance"]
     # check if there is sufficient balance for the transaction
-    if current_balance < transfer_amount:
+    if current_balance < valid_amount:
         print("Insufficient funds, your current balance is", current_balance)
         print("Would you make a DEPOSIT now? Yes or No")
         option = input()
         if option.lower() == "yes":
             deposit(email)
         elif option.lower() == "no":
-            print("Thank you for banking with us!")
+            print("Thank you!")
             quit()
         else:
             print("Invalid selection")
     else:
-        bank[email]["balance"] = current_balance - transfer_amount
+        bank[email]["balance"] = current_balance - valid_amount
         new_balance = bank[email]["balance"]
         recipient_balance = bank[recipient]["balance"]
-        bank[recipient]["balance"] = recipient_balance + transfer_amount
-        print("You have transferred", transfer_amount, "to", recipient, "Your new balance is ", new_balance)
+        bank[recipient]["balance"] = recipient_balance + valid_amount
+        print("You have transferred", valid_amount, "to", recipient, "Your new balance is ", new_balance)
 
 
 while True:
