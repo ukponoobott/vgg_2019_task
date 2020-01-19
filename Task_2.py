@@ -79,6 +79,9 @@ def check_balance(email):
     # query data structure to get current user balance
     balance = bank[email]["balance"]
     print("Your balance is ", balance)
+    print("===============================")
+    print("Thank you for banking with us")
+    quit()
 
 
 def deposit(email):
@@ -99,6 +102,8 @@ def deposit(email):
     bank[email]["balance"] = current_balance + valid_amount
     new_balance = bank[email]["balance"]
     print("You have deposited ", valid_amount, "Your new balance is ", new_balance)
+    print("===============================")
+    print("Thank you for banking with us")
 
 
 def withdraw(email):
@@ -124,7 +129,8 @@ def withdraw(email):
         if option.lower() == "yes":
             deposit(email)
         elif option.lower() == "no":
-            print("Thank you for banking with us!")
+            print("===============================")
+            print("Thank you for banking with us")
             quit()
         else:
             print("Invalid selection")
@@ -132,6 +138,8 @@ def withdraw(email):
         bank[email]["balance"] = current_balance - valid_withdrawal_amount
         new_balance = bank[email]["balance"]
         print("You have withdrawn", withdrawal_amount, "Your new balance is ", new_balance)
+        print("===============================")
+        print("Thank you for banking with us")
 
 
 def transfer(email):
@@ -161,7 +169,8 @@ def transfer(email):
         if option.lower() == "yes":
             deposit(email)
         elif option.lower() == "no":
-            print("Thank you!")
+            print("===============================")
+            print("Thank you for banking with us")
             quit()
         else:
             print("Invalid selection")
@@ -171,6 +180,8 @@ def transfer(email):
         recipient_balance = bank[recipient]["balance"]
         bank[recipient]["balance"] = recipient_balance + valid_amount
         print("You have transferred", valid_amount, "to", recipient, "Your new balance is ", new_balance)
+        print("===============================")
+        print("Thank you for banking with us")
 
 
 while True:
