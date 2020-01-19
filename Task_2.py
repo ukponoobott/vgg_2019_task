@@ -7,7 +7,7 @@ def create_account():
     """Create a new account"""
     print("Thank you for your interest in Banking with us,\nPlease enter your details correctly")
     print("=========================================\n=========================================")
-    email = input("Enter your email  ")
+    email = input("Enter your email  ").lower()
     # check if account id already exists
     if ("@" in email) and ("." in email):
         if email in bank.keys():
@@ -28,7 +28,7 @@ def transaction():
     """Authenticate users before they carry out transactions on the account"""
     print("Dear Customer, Welcome!")
     print("                                         \n                                         ")
-    email = input("Please enter your email  ")
+    email = input("Please enter your email  ").lower()
     # check if user exists or not
     if email not in bank.keys():
         print("Sorry Account does not exist, Please Create account")
@@ -103,7 +103,7 @@ def withdraw(email):
 
 def transfer(email):
     """Transfer funds"""
-    recipient = input("Please enter the beneficiary's email id")
+    recipient = input("Please enter the beneficiary's email id").lower()
     if recipient not in bank.keys():
         print("Beneficiary account does not exist, Please try again")
         transfer(email)
