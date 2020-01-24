@@ -22,7 +22,7 @@ def find_max(*args):
     return max(args)
 
 
-print(find_max(2, 6, 7, 8, 9, 4, 5))
+print(find_max(8, 9, 5))
 
 
 # No 3
